@@ -18,8 +18,8 @@ R ecosystems, without forcing any particular paradigm.
 
 ## ✨ Key goals
 
-- **Modern infrastructure** – a clean alternative to `flowCore` built on
-  simple, transparent data structures.  
+- **Modern infrastructure** – foregoes the use of S4 OOP to provide a
+  simple, transparent data structure.
 - **Functional and flexible** – `flowplyr` makes flow data accessible,
   so you can `purrr`, `dplyr`, `data.table`, or base R as you would any
   type of data.  
