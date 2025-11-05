@@ -16,6 +16,9 @@ knitr::opts_chunk$set(
 # flowplyr
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/flowplyr)](https://CRAN.R-project.org/package=flowplyr)
+[![Codecov test coverage](https://codecov.io/gh/hugoakerstrand/flowplyr/graph/badge.svg)](https://app.codecov.io/gh/hugoakerstrand/flowplyr)
+[![R-CMD-check](https://github.com/hugoakerstrand/flowplyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hugoakerstrand/flowplyr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## A modern and flexible framework for flow cytometry data in R
