@@ -1,0 +1,15 @@
+url: https://hugoakerstrand.github.io/flowplyr/
+template:
+  bootstrap: 5
+reference:
+  - title: Access data
+    desc: >
+      Move data from `flowCore::flowSet()` to `tibble::tibble()`.
+
+  - title: Manipulate data
+    desc: >
+      Data frame verbs.
+
+  - title: Plot data
+    desc: >
+      `ggplot2::ggplot()` wrappers and helpers.

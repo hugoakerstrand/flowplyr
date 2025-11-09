@@ -15,3 +15,8 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+URL: https://hugoakerstrand.github.io/flowplyr/
+Imports: 
+    flowCore,
+    ggplot2,
+    tibble
