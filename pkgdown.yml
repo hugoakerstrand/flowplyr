@@ -1,0 +1,9 @@
+pandoc: 3.1.11
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  flowplyr: flowplyr.html
+last_built: 2025-11-09T19:07Z
+urls:
+  reference: https://hugoakerstrand.github.io/flowplyr/reference
+  article: https://hugoakerstrand.github.io/flowplyr/articles
