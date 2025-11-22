@@ -1,3 +1,16 @@
+#' Convert a flowSet into a tibble
+#'
+#' @description `to_tibble()` creates a [tibble::tibble()] from a
+#'   [flowCore::flowSet()]; an S4 class that stores .fcs file data.
+#'
+#' @param data A flowSet object.
+#' @param ... What slots to extract? <kw: default = "all"> //  One or more of
+#'   `"all"`, `"sample_names"`, `"exprs"`, `"keywords"`, or `"meta_data"`.
+#'
+#' @returns A tibble containing the requested data components. The function will
+#'   error if `data` is not a flowSet or if invalid keywords are provided.
+#'
+#' @export
 to_tibble <- function(data, ...) {
   input_keywords <- c(...)
 
