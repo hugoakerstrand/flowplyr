@@ -1,5 +1,5 @@
 Package: flowplyr
-Title: A modern, flexible toolkit for flow cytometry data in R.
+Title: A modern, flexible toolkit for flow cytometry data in R
 Version: 0.0.0.9000
 Authors@R: 
     person("Hugo", "Åkerstrand", , "hugo.akerstrand@gmail.com", role = c("aut", "cre"))
@@ -17,6 +17,7 @@ Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://hugoakerstrand.github.io/flowplyr/
 Imports: 
+    cli,
     flowCore,
     ggplot2,
     tibble
