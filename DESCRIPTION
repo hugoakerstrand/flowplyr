@@ -12,7 +12,7 @@ RoxygenNote: 7.3.3
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.3.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://hugoakerstrand.github.io/flowplyr/
