@@ -1,6 +1,3 @@
-# Setup: Load example flowSet from flowCore package
-library(flowCore)
-
 # Use GvHD dataset which comes with flowCore
 data(GvHD, package = "flowCore")
 test_flowset <- GvHD[1:3]  # Use first 3 samples for faster tests
@@ -22,43 +19,41 @@ test_that("to_tibble errors with non-flowSet input", {
     to_tibble(NULL),
     class = "rlang_error"
   )
+
+  expect_error(
+    to_tibble(),
+    class = "missingArgError"
+  )
 })
 
-test_that("to_tibble errors with invalid keywords", {
+test_that("to_tibble errors with invalid keyword input", {
   expect_error(
     to_tibble(test_flowset, "invalid_keyword"),
     class = "rlang_error"
   )
 
   expect_error(
-    to_tibble(test_flowset, "wrong", "bad"),
-    class = "rlang_error"
-  )
-})
-
-test_that("to_tibble errors with partially invalid keywords", {
-  expect_error(
-    to_tibble(test_flowset, "sample_names", "invalid_keyword"),
+    to_tibble(test_flowset, "all", "bad"),
     class = "rlang_error"
   )
 })
 
 # Default Behavior Tests -------------------------------------------------------
 
-test_that("to_tibble returns all data by default (no keywords)", {
-  result <- to_tibble(test_flowset)
+test_that("to_tibble returns all data by default", {
+  result <- test_flowset |> to_tibble()
 
   expect_s3_class(result, "tbl_df")
+  expect_shape(result, dim = c(3,4))
   expect_named(result, c("sample_names", "exprs", "keywords", "meta_data"))
-  expect_equal(nrow(result), length(test_flowset))
 })
 
 test_that("to_tibble returns all data with 'all' keyword", {
-  result <- to_tibble(test_flowset, "all")
+  result <- test_flowset |> to_tibble("all")
 
   expect_s3_class(result, "tbl_df")
+  expect_shape(result, dim = c(3,4))
   expect_named(result, c("sample_names", "exprs", "keywords", "meta_data"))
-  expect_equal(nrow(result), length(test_flowset))
 })
 
 # Individual Keyword Tests -----------------------------------------------------
@@ -68,9 +63,9 @@ test_that("to_tibble returns only sample_names when requested", {
 
   expect_s3_class(result, "tbl_df")
   expect_named(result, "sample_names")
-  expect_equal(nrow(result), length(test_flowset))
+  expect_shape(result, dim = c(3,1))
   expect_type(result$sample_names, "character")
-  expect_equal(result$sample_names, rownames(pData(test_flowset)))
+  expect_identical(result$sample_names, rownames(flowCore::pData(test_flowset)))
 })
 
 test_that("to_tibble returns only exprs when requested", {
@@ -78,9 +73,9 @@ test_that("to_tibble returns only exprs when requested", {
 
   expect_s3_class(result, "tbl_df")
   expect_named(result, "exprs")
-  expect_equal(nrow(result), length(test_flowset))
+  expect_shape(result, dim = c(3,1))
   expect_type(result$exprs, "list")
-  expect_equal(length(result$exprs), length(test_flowset))
+  expect_length(result$exprs, length(test_flowset))
 
   # Check that each element is a matrix
   expect_true(all(sapply(result$exprs, is.matrix)))
@@ -91,7 +86,7 @@ test_that("to_tibble returns only keywords when requested", {
 
   expect_s3_class(result, "tbl_df")
   expect_named(result, "keywords")
-  expect_equal(nrow(result), length(test_flowset))
+  expect_shape(result, dim = c(3,1))
   expect_type(result$keywords, "list")
   expect_equal(length(result$keywords), length(test_flowset))
 
@@ -104,11 +99,10 @@ test_that("to_tibble returns only meta_data when requested", {
 
   expect_s3_class(result, "tbl_df")
   expect_named(result, "meta_data")
-  expect_equal(nrow(result), length(test_flowset))
-  expect_s3_class(result$meta_data[[1]], "data.frame")
+  expect_shape(result, dim = c(3,1))
 
   # Check that meta_data matches pData
-  expect_equal(result$meta_data[[1]], pData(test_flowset))
+  expect_equal(result[[1]], flowCore::pData(test_flowset))
 })
 
 # Multiple Keyword Tests -------------------------------------------------------
@@ -117,16 +111,16 @@ test_that("to_tibble handles multiple keywords", {
   result <- to_tibble(test_flowset, "sample_names", "exprs")
 
   expect_s3_class(result, "tbl_df")
+  expect_shape(result, dim = c(3,2))
   expect_named(result, c("sample_names", "exprs"))
-  expect_equal(nrow(result), length(test_flowset))
 })
 
 test_that("to_tibble handles three keywords", {
   result <- to_tibble(test_flowset, "sample_names", "exprs", "keywords")
 
   expect_s3_class(result, "tbl_df")
+  expect_shape(result, dim = c(3,3))
   expect_named(result, c("sample_names", "exprs", "keywords"))
-  expect_equal(nrow(result), length(test_flowset))
 })
 
 test_that("to_tibble handles all keywords except one", {
@@ -160,7 +154,7 @@ test_that("sample_names matches flowSet sample names", {
 
   expect_equal(
     result$sample_names,
-    rownames(pData(test_flowset))
+    rownames(flowCore::pData(test_flowset))
   )
 })
 
@@ -174,7 +168,7 @@ test_that("exprs contains correct matrices", {
   for (i in seq_along(result$exprs)) {
     expect_equal(
       result$exprs[[i]],
-      exprs(test_flowset[[i]])
+      flowCore::exprs(test_flowset[[i]])
     )
   }
 })
@@ -189,7 +183,7 @@ test_that("keywords contains correct keyword lists", {
   for (i in seq_along(result$keywords)) {
     expect_equal(
       result$keywords[[i]],
-      keyword(test_flowset[[i]])
+      flowCore::keyword(test_flowset[[i]])
     )
   }
 })
@@ -198,8 +192,8 @@ test_that("meta_data matches pData", {
   result <- to_tibble(test_flowset, "meta_data")
 
   expect_equal(
-    result$meta_data[[1]],
-    pData(test_flowset)
+    result[[1]],
+    flowCore::pData(test_flowset)
   )
 })
 
@@ -215,7 +209,7 @@ test_that("to_tibble works with single sample flowSet", {
 })
 
 test_that("to_tibble handles duplicate keyword specifications", {
-  # Should work without error, though behavior may vary
+  # Silently irnogred
   expect_no_error(
     to_tibble(test_flowset, "exprs", "exprs")
   )
