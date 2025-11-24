@@ -4,7 +4,7 @@
 \name{flowplyr-package}
 \alias{flowplyr}
 \alias{flowplyr-package}
-\title{flowplyr: A modern, flexible toolkit for flow cytometry data in R.}
+\title{flowplyr: A modern, flexible toolkit for flow cytometry data in R}
 \description{
 What the package does (one paragraph).
 }

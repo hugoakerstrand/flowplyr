@@ -15,8 +15,10 @@ to_tibble(data, ...)
 \value{
 A tibble containing the requested data components. The function will
 error if \code{data} is not a flowSet or if invalid keywords are provided.
+
+Additional keywords are ignored if combined with \code{all}.
 }
 \description{
-\code{to_tibble()} creates a \code{\link[tibble:tibble]{tibble::tibble()}} from a
+\code{to_tibble()} creates a \code{\link[tibble:tibble]{tibble::tibble()}} from slots of a
 \code{\link[flowCore:flowSet-class]{flowCore::flowSet()}}; an S4 class that stores .fcs file data.
 }
